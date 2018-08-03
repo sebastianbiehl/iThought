@@ -1,40 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Card from './Card/Card'
 import axios from '../../axios'
 
-class cards extends Component {
-    
-    state = {
-        loading: true,
-        posts: null
-    }
-
-    render() {
-        let cards = ''
-        
-        
-        if (this.state.loading) {
-            //Posts aus Datenbank laden
-            axios
-              .get("/ideas.json")
-              .then(resp => {
-                const updatedPosts = []
+const cards = (props) => {
+    let posts = null
+    let updatedPosts
+    props.posts ? updatedPosts = [...props.posts] : updatedPosts = []
+    if (props.loading) {
+        //Posts aus Datenbank laden
+        axios
+            .get("/ideas.json")
+            .then(resp => {
+                
                 for (let i in resp.data) {
-                  updatedPosts.push({...resp.data[i]})
+                    updatedPosts.push({ ...resp.data[i], id: i })
                 }
-                this.setState({loading: false,
-                posts: updatedPosts})
-              })
-              .catch(err => {
+                props.loadCards(updatedPosts)
+            })
+            .catch(err => {
                 console.log(err);
-              });
-        } else {
-            //Karten dynamisch generieren
-            cards = this.state.posts.map((post, index) => <Card key={post.title + index} title={post.title} body={post.body} />)
+            })
+    } else {
+        //Karten dynamisch generieren
+        posts = updatedPosts.map((post, index) => {
+            if(post.title.includes(props.titleFilter)) {
+                    return <Card onSaved={props.onSaved} onDelete={props.onDelete} updateTitle={props.updateTitle} updateBody={props.updateBody} key={post.id} index={index} id={post.id} title={post.title} body={post.body} />
+                }
         }
-
-        return cards
+        )
     }
+    return posts
 }
 
 

@@ -1,0 +1,16 @@
+.saved {
+    position: fixed;
+    top: 40%;
+    left: 35%;
+    z-index: 100;
+    width: 30%;
+}
+
+.add {
+    margin-top: 25%;
+    font-size: 2rem;
+}
+
+.addCard {
+    cursor: pointer;
+}

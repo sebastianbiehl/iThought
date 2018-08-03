@@ -1,0 +1,30 @@
+
+.no-style, .no-style:focus {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+}
+
+.exit {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.no-scroll {
+    overflow: hidden;
+    text-size: 0.9rem;
+}
+
+.btn-block {
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 768px) {
+    .btn-block {
+        display: block;
+    }
+}
