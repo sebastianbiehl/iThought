@@ -10,6 +10,7 @@ import indexCard from '../../img/karteikarte.jpg'
 class Dashboard extends Component {
   state = {
     title: "",
+    body: "",
     loading: true,
     posts: [],
     saved: false,
@@ -21,6 +22,12 @@ class Dashboard extends Component {
           title: title
       })
   };
+
+    filterBodyHandler = (body) => {
+        this.setState({
+            body: body
+        })
+    };
 
   changeLoading = () => {
       this.setState({loading: false})
@@ -105,8 +112,9 @@ onDelete = (id) => {
         {saved}
         <Control
           changeTitle={this.filterTitleHandler}
+          changeBody={this.filterBodyHandler}
         />
-         <Cards updateTitle={this.updateTitle} updateBody={this.updateBody}  loadCards={this.onLoadPosts} posts={this.state.posts} loading={this.state.loading} onDelete={this.onDelete} onSaved={this.onSaved} titleFilter={this.state.title}/> 
+         <Cards updateTitle={this.updateTitle} updateBody={this.updateBody}  loadCards={this.onLoadPosts} posts={this.state.posts} loading={this.state.loading} onDelete={this.onDelete} onSaved={this.onSaved} bodyFilter={this.state.body} titleFilter={this.state.title}/> 
             <div onClick={this.addCard} className="card m-2 addCard" style={{width: "18rem", display: 'inline-block'}}>
                 <img src={indexCard} alt="Karteikarte" className="card-img"/>
                 <div className="card-img-overlay">

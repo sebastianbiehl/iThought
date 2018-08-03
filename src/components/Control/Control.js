@@ -9,6 +9,7 @@ const control = props => (
     </button> */}
     
     <input type="text" onChange={(event) => props.changeTitle(event.target.value)} className="form-control mb-sm" placeholder="Nach Titel suchen..."  />
+    <input type="text" onChange={(event) => props.changeBody(event.target.value)} className="form-control mb-sm" placeholder="Nach Text suchen..." />
   </div>
 );
 
