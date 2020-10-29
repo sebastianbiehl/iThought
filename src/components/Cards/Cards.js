@@ -11,9 +11,10 @@ const cards = (props) => {
         axios
             .get("/notes")
             .then(resp => {
-                
+                console.log(resp.data)
                 for (let i in resp.data) {
-                    updatedPosts.push({ ...resp.data[i], id: i })
+                    resp.data[i]
+                    updatedPosts.push({ ...resp.data[i]})
                 }
                 props.loadCards(updatedPosts)
             })
@@ -24,7 +25,7 @@ const cards = (props) => {
         //Karten dynamisch generieren
         posts = updatedPosts.map((post, index) => {
             if (post.title.includes(props.titleFilter) && post.body.includes(props.bodyFilter) && (props.tagFilter === "" || post.tags?.includes(props.tagFilter))) {
-                    return <Card onSaved={props.onSaved} onDelete={props.onDelete} updateTitle={props.updateTitle} updateBody={props.updateBody} updateTags={props.updateTags} key={post.id} index={index} id={post.id} title={post.title} body={post.body} tags={post.tags} />
+                    return <Card onSaved={props.onSaved} onDelete={props.onDelete} updateTitle={props.updateTitle} updateBody={props.updateBody} updateTags={props.updateTags} key={post.id} index={index} id={post._id} title={post.title} body={post.body} tags={post.tags} />
                 }
         }
         )

@@ -42,13 +42,13 @@ class Dashboard extends Component {
 
   addCard = () => {
       axios
-          .post("/ideas.json", {
+          .post("/notes", {
                 title: '',
                 body: '',
                 tags: [],
           })
-          .then(response => {
-              this.setState({posts: this.state.posts.concat({title: '', body: '', tags: [], updated: 'cat2', id: res._id })})
+          .then(res => {
+              this.setState({posts: this.state.posts.concat({title: '', body: '', tags: [], updated: 'cat2', id: res.data.id })})
           })
           .catch(error => console.log(error));
   }
@@ -68,7 +68,6 @@ onLoadPosts = (posts) => {
 updateTitle = (title, key) => {
     const updatedPosts = [...this.state.posts]
     updatedPosts[key].title = title
-    console.log(updatedPosts)
     this.setState({posts: updatedPosts, updated: true})
 }
 
@@ -85,9 +84,10 @@ updateTags = (tag, key) => {
 }
 
 onSaved = (title, body, tags, id) => {
+    console.log("title " + title + "body" + body, tags, id)
     if(this.state.updated)
     axios
-          .put("/ideas/"+id+'.json', {
+          .put("/notes/"+id, {
                 title: title,
                 body: body,
                 tags: tags,
@@ -100,7 +100,7 @@ onSaved = (title, body, tags, id) => {
 
 onDelete = (id) => {
     axios
-          .delete("/ideas/"+id+'.json')
+          .delete("/notes/"+id)
           .then(response => {
               console.log('deleted')
               const updatedPosts = [...this.state.posts]
