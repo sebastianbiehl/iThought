@@ -11,6 +11,7 @@ class Dashboard extends Component {
   state = {
     title: "",
     body: "",
+    tag: "",
     loading: true,
     posts: [],
     saved: false,
@@ -20,6 +21,12 @@ class Dashboard extends Component {
   filterTitleHandler = (title) => {
       this.setState({
           title: title
+      })
+  };
+
+  filterTagHandler = (tag) => {
+      this.setState({
+          tag: tag
       })
   };
 
@@ -37,10 +44,11 @@ class Dashboard extends Component {
       axios
           .post("/ideas.json", {
                 title: '',
-                body: ''
+                body: '',
+                tags: [],
           })
           .then(response => {
-              this.setState({posts: this.state.posts.concat({title: '', body: '', updated: 'cat2', id: response.data.name })})
+              this.setState({posts: this.state.posts.concat({title: '', body: '', tags: [], updated: 'cat2', id: response.data.name })})
           })
           .catch(error => console.log(error));
   }
@@ -70,12 +78,19 @@ updateBody = (body, key) => {
     this.setState({posts: updatedPosts, updated: true})
 }
 
-onSaved = (title, body, id) => {
+updateTags = (tag, key) => {
+    const updatedPosts = [...this.state.posts]
+    updatedPosts[key].tags = [...updatedPosts[key].tags, tag]
+    this.setState({posts: updatedPosts, updated: true})
+}
+
+onSaved = (title, body, tags, id) => {
     if(this.state.updated)
     axios
           .put("/ideas/"+id+'.json', {
                 title: title,
-                body: body
+                body: body,
+                tags: tags,
           })
           .then(response => {
               this.setState({saved: true, updated: false})
@@ -108,23 +123,29 @@ onDelete = (id) => {
     }
 
     return (
+    <div>
       <div className="container">
-        {saved}
         <Control
           changeTitle={this.filterTitleHandler}
           changeBody={this.filterBodyHandler}
+          changeTag={this.filterTagHandler}
+          body={this.state.body}
+          title={this.state.title}
+          tag={this.state.tag}
         />
-         <Cards updateTitle={this.updateTitle} updateBody={this.updateBody}  loadCards={this.onLoadPosts} posts={this.state.posts} loading={this.state.loading} onDelete={this.onDelete} onSaved={this.onSaved} bodyFilter={this.state.body} titleFilter={this.state.title}/> 
-            <div onClick={this.addCard} className="card m-2 addCard" style={{width: "18rem", display: 'inline-block'}}>
+         <Cards updateTitle={this.updateTitle} updateBody={this.updateBody} updateTags={this.updateTags} loadCards={this.onLoadPosts} posts={this.state.posts} loading={this.state.loading} onDelete={this.onDelete} onSaved={this.onSaved} bodyFilter={this.state.body} tagFilter={this.state.tag} titleFilter={this.state.title}/> 
+            {!this.state.title && !this.state.body && !this.state.tag && (
+            <div onClick={this.addCard} className="card m-2 addCard" style={{width: "19.5rem", display: 'inline-block'}}>
                 <img src={indexCard} alt="Karteikarte" className="card-img"/>
                 <div className="card-img-overlay">
                     <div className="card-text add text-muted">
                         <i className="fas fa-plus"></i>
                     </div>
-                   
                 </div>
-        </div>
-      </div>
+                </div>)}
+                </div>
+                {saved}
+                </div>
     );
   }
 } 

@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: "https://ithought-app.firebaseio.com/"
+  baseURL: "http://localhost:9999/",
+   headers: { "Access-Control-Allow-Origin": "*" }
 });
 
 export default instance;
+
+// https://ithought-app.firebaseio.com/

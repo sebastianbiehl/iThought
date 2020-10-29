@@ -9,7 +9,7 @@ const cards = (props) => {
     if (props.loading) {
         //Posts aus Datenbank laden
         axios
-            .get("/ideas.json")
+            .get("/notes")
             .then(resp => {
                 
                 for (let i in resp.data) {
@@ -23,8 +23,8 @@ const cards = (props) => {
     } else {
         //Karten dynamisch generieren
         posts = updatedPosts.map((post, index) => {
-            if (post.title.includes(props.titleFilter) && post.body.includes(props.bodyFilter)) {
-                    return <Card onSaved={props.onSaved} onDelete={props.onDelete} updateTitle={props.updateTitle} updateBody={props.updateBody} key={post.id} index={index} id={post.id} title={post.title} body={post.body} />
+            if (post.title.includes(props.titleFilter) && post.body.includes(props.bodyFilter) && (props.tagFilter === "" || post.tags?.includes(props.tagFilter))) {
+                    return <Card onSaved={props.onSaved} onDelete={props.onDelete} updateTitle={props.updateTitle} updateBody={props.updateBody} updateTags={props.updateTags} key={post.id} index={index} id={post.id} title={post.title} body={post.body} tags={post.tags} />
                 }
         }
         )
