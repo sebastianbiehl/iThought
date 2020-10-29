@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: "http://localhost:9999/",
+  baseURL: "https://git.heroku.com/ithought93.git/",
    headers: { "Access-Control-Allow-Origin": "*" }
 });
 
