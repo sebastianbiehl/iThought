@@ -48,7 +48,7 @@ class Dashboard extends Component {
                 tags: [],
           })
           .then(res => {
-              this.setState({posts: this.state.posts.concat({title: '', body: '', tags: [], updated: 'cat2', id: res.data.id })})
+              this.setState({posts: this.state.posts.concat({title: '', body: '', tags: [], updated: 'cat2', _id: res.data.id })})
           })
           .catch(error => console.log(error));
   }

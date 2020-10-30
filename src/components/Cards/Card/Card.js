@@ -44,7 +44,7 @@ const card = props => {
     console.log(
     "here"
     )
-    console.log(props.title)
+    console.log(props.id)
 
     return (
             <div className="card m-2" style={{width: "19.5rem", display: 'inline-block'}}>
